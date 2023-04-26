@@ -1,6 +1,7 @@
 package edu.sjsu.android.musicplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,15 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Audio song = songList.get(position);
         holder.title.setText(song.getTitle());
+
+        holder.itemView.setOnClickListener(v -> {
+            MyMediaPlayer.getInstance().reset();
+            MyMediaPlayer.currentIndex = position;
+            Intent intent = new Intent(context, MusicPlayerActivity.class);
+            intent.putExtra("LIST", songList);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        });
     }
 
     @Override

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         noSongs.setVisibility(View.INVISIBLE);
 
         //checks if permission is granted before getting local music files
-        if(checkPermission() == false){
+        if(!checkPermission()){
             requestPermission();
             return;
         }
