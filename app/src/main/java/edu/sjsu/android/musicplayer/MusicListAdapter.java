@@ -13,12 +13,13 @@ import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.ViewHolder> {
 
-    ArrayList<Audio> songList;
+    List<Audio> songList;
     Context context;
-    public MusicListAdapter(ArrayList<Audio> songList, Context context) {
+    public MusicListAdapter(List<Audio> songList, Context context) {
         this.songList = songList;
         this.context = context;
     }
@@ -44,7 +45,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
             MyMediaPlayer.getInstance().reset();
             MyMediaPlayer.currentIndex = position;
             Intent intent = new Intent(context, MusicPlayerActivity.class);
-            intent.putExtra("LIST", songList);
+            intent.putExtra("LIST", (ArrayList<Audio>) songList);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
