@@ -42,8 +42,6 @@ public class SpotifyFragment extends Fragment {
     private static final String REDIRECT_URI = "edu.sjsu.android.musicplayer://callback";
     private static final String SPOTIFY_BASE_URL = "https://api.spotify.com/v1";
     private SpotifyAppRemote mSpotifyAppRemote;
-    private CronetEngine cronetEngine;
-    private Executor executor;
     private String accessToken = null;
 
     public static SpotifyFragment newInstance() {
@@ -65,11 +63,7 @@ public class SpotifyFragment extends Fragment {
         View root = binding.getRoot();
 
         CronetEngine.Builder myBuilder = new CronetEngine.Builder(getContext());
-        cronetEngine = myBuilder.build();
-        executor = Executors.newSingleThreadExecutor();
 
-//        final TextView textView = binding.sectionLabel;
-//        textView.setText("Fragment 1");
         return root;
     }
 
@@ -134,29 +128,25 @@ public class SpotifyFragment extends Fragment {
         }
     }
 
-    private void connected() {
-        // Play a playlist
-        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
-        // Subscribe to PlayerState
-        mSpotifyAppRemote.getPlayerApi()
-                .subscribeToPlayerState()
-                .setEventCallback(playerState -> {
-                    final Track track = playerState.track;
-                    if (track != null) {
-                        Toast.makeText(getContext(), track.name + " by " + track.artist.name, Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
+//    private void connected() {
+//        // Play a playlist
+//        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
+//        // Subscribe to PlayerState
+//        mSpotifyAppRemote.getPlayerApi()
+//                .subscribeToPlayerState()
+//                .setEventCallback(playerState -> {
+//                    final Track track = playerState.track;
+//                    if (track != null) {
+//                        Toast.makeText(getContext(), track.name + " by " + track.artist.name, Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//    }
 
     public void handleSearch(String searchText) {
         if(searchText.isEmpty()){
             return;
         }
         String url = SPOTIFY_BASE_URL + "/q=" + searchText + "&type=track";
-        UrlRequest.Builder requestBuilder = cronetEngine.newUrlRequestBuilder(url, new MyUrlRequestCallback(), executor);
-
-        UrlRequest request = requestBuilder.build();
-        request.start();
         //binding.list.setAdapter(new MusicListAdapter(null, getContext()));
     }
 
@@ -164,34 +154,5 @@ public class SpotifyFragment extends Fragment {
     public void onStop() {
         super.onStop();
         SpotifyAppRemote.disconnect(mSpotifyAppRemote);
-    }
-
-    private class MyUrlRequestCallback extends UrlRequest.Callback {
-        private static final String TAG = "MyUrlRequestCallback";
-
-        @Override
-        public void onRedirectReceived(UrlRequest request, UrlResponseInfo info, String newLocationUrl) {
-        }
-
-        @Override
-        public void onResponseStarted(UrlRequest request, UrlResponseInfo info) {
-            request.read(ByteBuffer.allocateDirect(102400));
-        }
-
-        @Override
-        public void onReadCompleted(UrlRequest request, UrlResponseInfo info, ByteBuffer byteBuffer) {
-            byteBuffer.clear();
-            request.read(byteBuffer);
-        }
-
-        @Override
-        public void onSucceeded(UrlRequest request, UrlResponseInfo info) {
-            Log.i(TAG, "onSucceeded method called.");
-        }
-
-        @Override
-        public void onFailed(UrlRequest request, UrlResponseInfo info, CronetException error) {
-
-        }
     }
 }
