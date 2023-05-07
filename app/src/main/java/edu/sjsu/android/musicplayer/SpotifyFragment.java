@@ -62,8 +62,6 @@ public class SpotifyFragment extends Fragment {
         binding = FragmentSpotifyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        CronetEngine.Builder myBuilder = new CronetEngine.Builder(getContext());
-
         return root;
     }
 
