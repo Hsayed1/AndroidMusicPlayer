@@ -37,7 +37,7 @@ import edu.sjsu.android.musicplayer.databinding.FragmentTabbedBinding;
 public class SpotifyFragment extends Fragment {
     //private FragmentTabbedBinding binding;
     private FragmentSpotifyBinding binding;
-    private static final String CLIENT_ID = "f1650e242a8f4adeabc4f3064c95f022";
+    private static final String CLIENT_ID = "2bbb51fe700f4a40804482e9ed90fc05";
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "edu.sjsu.android.musicplayer://callback";
     private static final String SPOTIFY_BASE_URL = "https://api.spotify.com/v1";
