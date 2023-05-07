@@ -1,6 +1,7 @@
 package edu.sjsu.android.musicplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -68,6 +69,13 @@ public class TabbedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(sectionsPagerAdapter == null) return;
+        sectionsPagerAdapter.handleSpotifyAuthorization(requestCode, resultCode, intent);
+    }
+
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         @StringRes
@@ -84,11 +92,15 @@ public class TabbedActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
+            if(localMusicFragmentInstance == null) {
                 localMusicFragmentInstance = LocalMusicFragment.newInstance();
+            }
+            if(spotifyFragmentInstance == null) {
+                spotifyFragmentInstance = SpotifyFragment.newInstance();
+            }
+            if(position == 0){
                 return localMusicFragmentInstance;
             }
-            spotifyFragmentInstance = SpotifyFragment.newInstance();
             return spotifyFragmentInstance;
         }
 
@@ -107,6 +119,14 @@ public class TabbedActivity extends AppCompatActivity {
             if(localMusicFragmentInstance != null) {
                 localMusicFragmentInstance.handleSearch(searchText);
             }
+            if(spotifyFragmentInstance != null) {
+                spotifyFragmentInstance.handleSearch(searchText);
+            }
+        }
+
+        public void handleSpotifyAuthorization(int requestCode, int resultCode, Intent intent) {
+            if(spotifyFragmentInstance == null) return;
+            spotifyFragmentInstance.handleSpotifyAuthorization(requestCode, resultCode, intent);
         }
     }
 }
