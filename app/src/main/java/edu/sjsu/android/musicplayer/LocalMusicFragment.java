@@ -53,7 +53,7 @@ public class LocalMusicFragment extends Fragment {
         binding = FragmentLocalMusicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.noSongs.setVisibility(View.INVISIBLE);
+        binding.noLocalSongs.setVisibility(View.INVISIBLE);
 
         if(!checkPermission()){
             requestPermission();
@@ -73,7 +73,7 @@ public class LocalMusicFragment extends Fragment {
 
         filteredSongList = new ArrayList<>(originalSongList);
         if(filteredSongList.size() == 0) //if there are no songs show message
-            binding.noSongs.setVisibility(View.VISIBLE);
+            binding.noLocalSongs.setVisibility(View.VISIBLE);
         else {
             //setting the recycler view
             binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
