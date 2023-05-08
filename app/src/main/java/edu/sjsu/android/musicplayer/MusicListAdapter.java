@@ -2,6 +2,9 @@ package edu.sjsu.android.musicplayer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,17 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Audio song = songList.get(position);
         holder.title.setText(song.getTitle());
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(song.getPath());
+        byte[] albumArt = retriever.getEmbeddedPicture();
+
+        if (albumArt != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(albumArt, 0, albumArt.length);
+            if (bitmap != null) {
+                holder.music_icon.setImageBitmap(bitmap);
+            }
+        }
 
         holder.itemView.setOnClickListener(v -> {
             MyMediaPlayer.getInstance().reset();

@@ -3,6 +3,9 @@ package edu.sjsu.android.musicplayer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +55,17 @@ public class MusicPlayerActivity extends Activity {
 
     void setResourcesWithMusic() {
         currentSong = songList.get(MyMediaPlayer.currentIndex);
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(currentSong.getPath());
+        byte[] albumArt = retriever.getEmbeddedPicture();
+
+        if (albumArt != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(albumArt, 0, albumArt.length);
+            if (bitmap != null) {
+                musicIcon.setImageBitmap(bitmap);
+            }
+        }
 
         titleTextView.setText(currentSong.getTitle());
         totalTimeTextView.setText(convertToMMSS(currentSong.getLength()));
