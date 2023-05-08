@@ -30,7 +30,7 @@
                 android:scrollIndicators="right"
                 android:fadeScrollbars="true"
                 android:background="#444444"
-                android:id="@+id/list"/>
+                android:id="@+id/spotifyList"/>
         </ScrollView>
 
 
@@ -45,7 +45,7 @@
             android:layout_marginTop="150dp"
             android:textColor="@color/white"
             android:background="@color/black"
-            android:id="@+id/noSongs"
+            android:id="@+id/noSpotifySongs"
             android:layout_centerInParent="true"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

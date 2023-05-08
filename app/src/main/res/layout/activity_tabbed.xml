@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/search_bar_text"
                 android:drawableLeft="@drawable/ic_search_24dp"
-                android:hint="Search music in spotify and locally"
+                android:hint="Search for music locally and on Spotify"
                 android:textColorHint="#ffffff"
                 android:layout_margin="10dp"
                 android:textColor="#ffffff"

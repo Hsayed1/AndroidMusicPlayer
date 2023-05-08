@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MusicPlayer</string>
+    <string name="app_name">Music Player</string>
     <string name="title_activity_tabbed">Music Player</string>
     <string name="tab_local">Local</string>
     <string name="tab_spotify">Spotify</string>
