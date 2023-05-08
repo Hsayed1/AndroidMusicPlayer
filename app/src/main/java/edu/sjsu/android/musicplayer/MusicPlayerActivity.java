@@ -91,9 +91,11 @@ public class MusicPlayerActivity extends Activity {
 
     private void pausePlay(View view) {
         if(mediaPlayer.isPlaying()){
+            pausePlayBtn.setImageResource(R.drawable.baseline_play_arrow_24);
             mediaPlayer.pause();
         }
         else {
+            pausePlayBtn.setImageResource(R.drawable.baseline_pause_24);
             mediaPlayer.start();
         }
     }
@@ -130,13 +132,6 @@ public class MusicPlayerActivity extends Activity {
             if(mediaPlayer == null) return;
             seekBar.setProgress(mediaPlayer.getCurrentPosition());
             currentTimeTextView.setText(convertToMMSS(mediaPlayer.getCurrentPosition()+""));
-
-            if(mediaPlayer.isPlaying()) {
-                pausePlayBtn.setImageResource(R.drawable.baseline_pause_24);
-            }
-            else {
-                pausePlayBtn.setImageResource(R.drawable.baseline_play_arrow_24);
-            }
         }
     }
 
