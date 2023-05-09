@@ -59,7 +59,13 @@ public class LocalMusicFragment extends Fragment {
             requestPermission();
             return root;
         }
+        loadSongs();
 
+        return root;
+
+    }
+
+    public void loadSongs() {
         String[] projection = {MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.DURATION };
         //passing because we only want music from the database
         String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
@@ -79,9 +85,6 @@ public class LocalMusicFragment extends Fragment {
             binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
             binding.list.setAdapter(new MusicListAdapter(filteredSongList, getContext()));
         }
-
-        return root;
-
     }
 
     public void handleSearch(String searchText) {

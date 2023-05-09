@@ -11,6 +11,7 @@ import android.widget.SearchView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -95,6 +96,16 @@ public class TabbedActivity extends AppCompatActivity {
         sectionsPagerAdapter.handleSpotifyAuthorization(requestCode, resultCode, intent);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 123:
+                sectionsPagerAdapter.loadSongs();
+                break;
+        }
+    }
+
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         @StringRes
@@ -148,6 +159,12 @@ public class TabbedActivity extends AppCompatActivity {
         public void handleSpotifyAuthorization(int requestCode, int resultCode, Intent intent) {
             if(spotifyFragmentInstance == null) return;
             spotifyFragmentInstance.handleSpotifyAuthorization(requestCode, resultCode, intent);
+        }
+
+        public void loadSongs() {
+            if(localMusicFragmentInstance != null) {
+                localMusicFragmentInstance.loadSongs();
+            }
         }
     }
 }
