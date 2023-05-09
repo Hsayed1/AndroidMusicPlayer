@@ -101,29 +101,6 @@ public class SpotifyFragment extends Fragment {
 
         AuthorizationClient.openLoginActivity(getActivity(), REQUEST_CODE, request);
 
-//        //Set the connection parameters
-//        ConnectionParams connectionParams =
-//                new ConnectionParams.Builder(CLIENT_ID)
-//                        .setRedirectUri(REDIRECT_URI)
-//                        .showAuthView(true)
-//                        .build();
-//        // Connect to app remote
-//        SpotifyAppRemote.connect(getContext(), connectionParams,
-//                new Connector.ConnectionListener() {
-//                    @Override
-//                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
-//                        mSpotifyAppRemote = spotifyAppRemote;
-//                        Log.d("SpotifyFragment", "Connected! Yay!");
-//                        // Start interacting with app remote
-//                        connected();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable throwable) {
-//                        Log.e("SpotifyFragment", throwable.getMessage(), throwable);
-//                        // Connection failed, handle errors here
-//                    }
-//                });
     }
 
     public void handleSpotifyAuthorization(int requestCode, int resultCode, Intent intent) {
@@ -147,19 +124,6 @@ public class SpotifyFragment extends Fragment {
         }
     }
 
-//    private void connected() {
-//        // Play a playlist
-//        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
-//        // Subscribe to PlayerState
-//        mSpotifyAppRemote.getPlayerApi()
-//                .subscribeToPlayerState()
-//                .setEventCallback(playerState -> {
-//                    final Track track = playerState.track;
-//                    if (track != null) {
-//                        Toast.makeText(getContext(), track.name + " by " + track.artist.name, Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//    }
     class HttpTask extends AsyncTask<String, Void, List<Track>> {
         @Override
         protected List<Track> doInBackground(String... urls) {
@@ -202,31 +166,14 @@ public class SpotifyFragment extends Fragment {
 }
     public void handleSearch(String searchText) {
         if(searchText.isEmpty()){
+            binding.noSpotifySongs.setVisibility(View.VISIBLE);
             return;
         }
         searchResults.clear();
         new HttpTask().execute(SPOTIFY_BASE_URL + "q=" + StringEscapeUtils.escapeHtml4(searchText) + "&type=track" + "&access_token=" + accessToken);
-        /**
-        try {
-            URL url = new URL (SPOTIFY_BASE_URL + "/q=" + StringEscapeUtils.escapeHtml4(searchText) + "&type=track" + "&access_token=" + accessToken);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Accept", "application/json");
-            if (con.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + con.getResponseCode());
-            }
-            BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
-            String output = null;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-            con.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         **/
+
     }
+
 
     @Override
     public void onStop() {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.SearchView;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -51,20 +53,37 @@ public class TabbedActivity extends AppCompatActivity {
             }
             return false;
         });
-        binding.searchBarText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+//        binding.searchBarText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                sectionsPagerAdapter.handleSearchText(charSequence.toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+//
+
+        SearchView search = findViewById(R.id.search_bar);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                sectionsPagerAdapter.handleSearchText(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public boolean onQueryTextChange(String newText) {
+                sectionsPagerAdapter.handleSearchText(newText);
+                return true;
             }
         });
     }
@@ -117,9 +136,11 @@ public class TabbedActivity extends AppCompatActivity {
 
         public void handleSearchText(String searchText) {
             if(localMusicFragmentInstance != null) {
+                findViewById(R.id.noLocalSongs).setVisibility(View.GONE);
                 localMusicFragmentInstance.handleSearch(searchText);
             }
             if(spotifyFragmentInstance != null) {
+                findViewById(R.id.noSpotifySongs).setVisibility(View.GONE);
                 spotifyFragmentInstance.handleSearch(searchText);
             }
         }

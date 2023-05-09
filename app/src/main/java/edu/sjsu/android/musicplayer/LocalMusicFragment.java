@@ -81,9 +81,14 @@ public class LocalMusicFragment extends Fragment {
         }
 
         return root;
+
     }
 
     public void handleSearch(String searchText) {
+        if(searchText.isEmpty()){
+            binding.noLocalSongs.setVisibility(View.VISIBLE);
+            return;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !searchText.isEmpty()) {
             filteredSongList = originalSongList
                     .stream()
