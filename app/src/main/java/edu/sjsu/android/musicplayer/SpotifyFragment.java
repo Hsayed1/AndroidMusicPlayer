@@ -48,13 +48,11 @@ import edu.sjsu.android.musicplayer.databinding.FragmentSpotifyBinding;
 import edu.sjsu.android.musicplayer.databinding.FragmentTabbedBinding;
 
 public class SpotifyFragment extends Fragment {
-    //private FragmentTabbedBinding binding;
     private FragmentSpotifyBinding binding;
     private static final String CLIENT_ID = "2bbb51fe700f4a40804482e9ed90fc05";
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "http://edu.sjsu.android.musicplayer/callback";
     private static final String SPOTIFY_BASE_URL = "https://api.spotify.com/v1/search?";
-    private SpotifyAppRemote mSpotifyAppRemote;
     private String accessToken = null;
     List<Track> searchResults = new ArrayList<>();
 
@@ -172,12 +170,5 @@ public class SpotifyFragment extends Fragment {
         searchResults.clear();
         new HttpTask().execute(SPOTIFY_BASE_URL + "q=" + StringEscapeUtils.escapeHtml4(searchText) + "&type=track" + "&access_token=" + accessToken);
 
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
     }
 }

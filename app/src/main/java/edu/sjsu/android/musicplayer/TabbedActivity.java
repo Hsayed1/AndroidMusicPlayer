@@ -55,36 +55,20 @@ public class TabbedActivity extends AppCompatActivity {
             return false;
         });
 
-//        binding.searchBarText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                sectionsPagerAdapter.handleSearchText(charSequence.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
-//
-
-        SearchView search = findViewById(R.id.search_bar);
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        binding.searchBarText.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return true;
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                sectionsPagerAdapter.handleSearchText(newText);
-                return true;
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                sectionsPagerAdapter.handleSearchText(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
